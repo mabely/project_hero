@@ -3,19 +3,23 @@ from bs4 import BeautifulSoup
 import lxml
 from urllib.parse import urlparse, parse_qs
 
-url = 'https://www.rightmove.co.uk/property-to-rent/property-79047791.html'
-
-def main(url):
+def main():
+    url = get_url()
     if which_site(url) == 'rightmove':
         soup = soup_creator(url)
-        right_move_dict = {}
+        property_dict = {}
+        property_dict['url'] = url
         price, latitude, longitude, furnish_type = right_move_parser(soup)
         for i in ('price', 'latitude', 'longitude', 'furnish_type'):
             # the locals()[i] specifies the scope to i otherwise soup will also be outputed since it is in local scope
-            right_move_dict[i] = locals()[i]
-        return right_move_dict
+            property_dict[i] = locals()[i]
+        return property_dict
     else:
-        pass
+        return False
+
+def get_url():
+    url = 'https://www.rightmove.co.uk/property-to-rent/property-79047791.html'
+    return url
 
 def which_site(url):
     if 'rightmove' in url:
@@ -67,4 +71,4 @@ def furnish_strip(soup):
     return furnish_type
        
 
-print(main(url))
+# print(main())
