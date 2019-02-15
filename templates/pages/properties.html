@@ -1,0 +1,65 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <form action="/" method="POST">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <label for="surname">Surname: </label>
+                    <input type="text" name="name_p" id="name_p">
+                </div>
+                <div class="col-sm">
+                    <select name="loc_select" id="loc_select">
+                        <option value="city" name="city">City</option>
+                        <option value="postcode" name="postcode">Postcode</option>
+                    </select>
+                    <input type="text" name="loc_p" id="loc_p">
+                </div>
+                <div class="col-sm">
+                    <button type="submit" class="btn btn-success" id="search">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% if search %}
+<div class="row">
+<p>{{ search }}</p>
+</div>
+
+<table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+    <thead>
+        <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Region</th>
+            <th>Postcode</th>
+            <th>Telephone</th>
+            <!-- <th>X</th>
+            <th>Y</th> -->
+        </tr>
+    </thead>
+    <tbody>
+    {% for person in search %}
+        <tr>
+            <td>{{ person[1] }}</td>
+            <td>{{ person[0] }}</td>           
+            <td>{{ person[2] }}</td>
+            <td>{{ person[3] }}</td>
+            <td>{{ person[4] }}</td>
+            <td>{{ person[5] }}</td>
+            <td>{{ person[6] }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% elif not search and request_type == 'POST' %}
+<p>Sorry, we didn't find any matches.</p>
+{% endif %}
+{% endblock %}

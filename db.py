@@ -2,7 +2,7 @@ import sqlite3
 import scrape
 
 def get_gb():
-    db_path = 'file:saved_properties.db'
+    db_path = 'file:static/db/saved_properties.db'
     # pass
     return db_path
 
