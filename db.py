@@ -1,6 +1,8 @@
 import sqlite3
 import scrape
 
+# NEED TO MAKE ALL DB TABLES REFER TO THE DB PATH
+
 def get_gb():
     db_path = 'file:static/db/saved_properties.db'
     # pass
@@ -24,15 +26,21 @@ def create_table(db_path, cursor, connection):
     cursor.execute('CREATE TABLE saved_properties(url TEXT, price TEXT, furnish_type TEXT, longitude REAL, latitude REAL)')
     connection.commit()
 
-def add_property_to_db(scraped_data_dict, c, conn):
+def add_property_to_db(scraped_data_dict, cursor, connection):
     if scraped_data_dict and type(scraped_data_dict) == dict:
         # if scrape.main() returns the dict, add to db
-        c.execute('INSERT INTO saved_properties(url, price, furnish_type, longitude, latitude) VALUES(?, ?, ?, ?, ?)',(scraped_data_dict['url'], scraped_data_dict['price'], scraped_data_dict['furnish_type'], scraped_data_dict['longitude'], scraped_data_dict['latitude'])
+        cursor.execute('INSERT INTO saved_properties(url, price, furnish_type, longitude, latitude) VALUES(?, ?, ?, ?, ?)',(scraped_data_dict['url'], scraped_data_dict['price'], scraped_data_dict['furnish_type'], scraped_data_dict['longitude'], scraped_data_dict['latitude'])
         )
-        conn.commit()
+        connection.commit()
     else:
         # do nothing
         print('Nothing to add to db')
+
+def query_db(cursor, connection):
+    c, conn = connect_db()
+    cursor.execute('SELECT * FROM saved_properties;')
+    properties = c.fetchall()
+    return properties
     
 if __name__ == '__main__':
     db_path = get_gb()
