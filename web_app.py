@@ -4,8 +4,17 @@ import main
 app = Flask(__name__)
 
 @app.route('/')
+@app.route('/home')
 def index():
     return render_template('pages/index.html')
+
+@app.route('/about')
+def about():
+    return render_template('pages/about.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('pages/contact.html')
 
 @app.route('/properties', methods=['GET'])
 def properties_get():
