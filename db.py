@@ -37,9 +37,9 @@ def add_property_to_db(scraped_data_dict, cursor, connection):
         print('Nothing to add to db')
 
 def query_db(cursor, connection):
-    c, conn = connect_db()
+    # c, conn = connect_db()
     cursor.execute('SELECT * FROM saved_properties;')
-    properties = c.fetchall()
+    properties = cursor.fetchall()
     return properties
     
 if __name__ == '__main__':

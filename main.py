@@ -10,6 +10,8 @@ def return_db():
     conn.close()
 
     return properties
+# Seems to return empty list only
+
 
 # for slack integration
 return_db()
